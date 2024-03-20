@@ -49,13 +49,14 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 					}
 			}
 		}
-		// TODO 多节点
 
 		if (typeof newChild === 'string' || typeof newChild === 'number') {
 			return placeSingleChild(
 				reconcileSingleTextNode(returnFiber, currentFiber, newChild)
 			);
 		}
+
+		// TODO 多节点
 
 		if (__DEV__) {
 			console.error('未实现的reconcile类型', newChild);
