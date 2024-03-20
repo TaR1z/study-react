@@ -5,13 +5,10 @@ import { HostRoot } from './workTags';
 
 let workInProgress: FiberNode | null = null;
 
-function prepareFreshStack(root: FiberRootNode) {
-	workInProgress = createWorkInProgress(root.current, {});
-}
-
 export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	// TODO 调度功能
 	const root = markUpdateFromFiberToRoot(fiber);
+	renderRoot(root);
 }
 
 function markUpdateFromFiberToRoot(fiber: FiberNode) {
@@ -27,6 +24,10 @@ function markUpdateFromFiberToRoot(fiber: FiberNode) {
 	return null;
 }
 
+function prepareFreshStack(root: FiberRootNode) {
+	workInProgress = createWorkInProgress(root.current, {});
+}
+
 function renderRoot(root: FiberRootNode) {
 	prepareFreshStack(root);
 
@@ -34,10 +35,17 @@ function renderRoot(root: FiberRootNode) {
 		try {
 			workLoop();
 		} catch (e) {
-			console.warn('workLoop发生错误', e);
+			if (__DEV__) {
+				console.warn('workLoop发生错误', e);
+			}
 			workInProgress = null;
 		}
 	} while (true);
+
+	const finishedWork = root.current.alternate;
+	root.finishedWork = finishedWork;
+
+	commitRoot(root);
 }
 
 function workLoop() {
