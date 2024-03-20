@@ -1,4 +1,9 @@
-import { Container, createInstance, createTextInstance } from 'hostConfig';
+import {
+	Container,
+	appendInitialChild,
+	createInstance,
+	createTextInstance
+} from 'hostConfig';
 import { FiberNode } from './fiber';
 import { HostComponent, HostRoot, HostText } from './workTags';
 import { NoFlags } from './fiberFlags';
@@ -42,7 +47,7 @@ function appendAllChildren(parent: Container | Element, wip: FiberNode) {
 
 	while (node !== null) {
 		if (node.tag === HostComponent || node.tag === HostText) {
-			appendAllChildren(parent, node?.stateNode);
+			appendInitialChild(parent, node?.stateNode);
 		} else if (node.child !== null) {
 			node.child.return = node;
 			node = node.child;

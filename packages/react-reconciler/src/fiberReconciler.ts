@@ -8,7 +8,7 @@ import {
 	enqueueUpdate
 } from './updateQueue';
 import { ReactElementType } from 'shared/ReactTypes';
-import { scheduleUpdateOnFiber } from './workloop';
+import { scheduleUpdateOnFiber } from './workLoop';
 
 export function createContainer(container: Container) {
 	const hostRootFiber = new FiberNode(HostRoot, {}, null);
