@@ -8,7 +8,11 @@ const App = () => {
 		setNum(num + 1);
 	};
 
-	return <div onClick={handleClick}>{num}</div>;
+	const arr =
+		num % 2 === 0
+			? [<li key={1}>1</li>, <li key={2}>2</li>, <li key={3}>3</li>]
+			: [<li key={3}>3</li>, <li key={2}>2</li>, <li key={2}>2</li>];
+	return <ul onClick={handleClick}>{arr}</ul>;
 };
 
 ReactDom.createRoot(document.getElementById('root')!).render(<App />);
